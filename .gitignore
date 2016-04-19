@@ -1,0 +1,7 @@
+.htaccess
+*.lock
+*.phar
+*.db
+
+.idea/
+vendor/

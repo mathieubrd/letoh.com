@@ -1,0 +1,60 @@
+<aside class="aside-filters">
+    <h3 class="aside-filters__title">Filtres</h3>
+    <div class="filter">
+        <span class="filter__title">Prix de la chambre</span>
+        <div class="filter__price-range">
+            <div class="range">
+                <div class="range__slider"></div>
+                <div class="range__min-value">0€</div>
+                <div class="range__max-value">100€</div>
+            </div>
+        </div>
+    </div>
+    <div class="filter">
+        <span class="filter__title">Note</span>
+        <div class="filter__rating-range">
+            <div class="range">
+                <div class="range__slider"></div>
+                <div class="range__min-value">0 étoile</div>
+                <div class="range__max-value">5 étoiles</div>
+            </div>
+        </div>
+    </div>
+    <div class="filter filter--last">
+        <span class="filter__title">Type de chambre</span>
+        <input type="radio" name="roomType" value="1" checked /> privative
+        <input type="radio" name="roomType" value="2" /> dortoir
+    </div>
+
+    <div class="filter__btn">
+        <input type="submit" class="btn" value="Trier" />
+    </div>
+</aside>
+
+<script>
+    $('.filter__price-range .range__slider').slider({
+        range: true,
+        min: {{ minPrice }},
+        max: {{ maxPrice }},
+        values: [{{ minPrice }}, {{ maxPrice }}],
+        slide: function(event, ui) {
+            $('.filter__price-range .range__min-value').text(ui.values[0] + '€');
+            $('.filter__price-range .range__max-value').text(ui.values[1] + '€');
+        },
+    });
+    $('.filter__price-range .range__min-value').text($('.filter__price-range .range__slider').slider('values', 0) + '€');
+    $('.filter__price-range .range__max-value').text($('.filter__price-range .range__slider').slider('values', 1) + '€');
+
+    $('.filter__rating-range .range__slider').slider({
+        range: true,
+        min: 0,
+        max: 5,
+        values: [0, 5],
+        slide: function(event, ui) {
+            $('.filter__rating-range .range__min-value').text(ui.values[0] + ' étoile(s)');
+            $('.filter__rating-range .range__max-value').text(ui.values[1] + ' étoile(s)');
+        }
+    });
+    $('.filter__rating-range .range__min-value').text($('.filter__rating-range .range__slider').slider('values', 0) + ' étoile(s)');
+    $('.filter__rating-range .range__max-value').text($('.filter__rating-range .range__slider').slider('values', 1) + ' étoile(s)');
+</script>

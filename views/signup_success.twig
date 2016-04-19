@@ -1,0 +1,14 @@
+{% extends 'base.twig' %}
+
+{% block content %}
+    <section class="section">
+        <h2>Inscription terminée</h2>
+
+        <p>
+            Votre inscription est terminée.<br />
+            Vous pouvez d'ores et déjà vous connecter.
+        </p>
+
+        <a href="{{ app.url_generator.generate('home') }}">Retourner à l'accueil</a>
+    </section>
+{% endblock %}

@@ -1,0 +1,29 @@
+{% extends 'base.twig' %}
+
+{% block content %}
+    <section class="section">
+        <h2>Réservation d'une chambre</h2>
+        <h3>Hotel : "Le Pourpauvres"</h3>
+        <h5>Chambre de {{ hotelRoom.capacity }} personne(s) - du 12/04/2016 au 13/04/2016</h5>
+        <h4>Total : {{ totalPrice }}€</h4>
+        <form method="post" action="">
+            <div class="form__field">
+                <span class="form__field__name">Adresse e-mail</span>
+                <input type="text" class="input-default" value="mathieu.brochard76@free.fr" disabled />
+            </div>
+            <div class="form__field">
+                <span class="form__field__name">Adresse</span>
+                <input type="text" class="input-default" value="192 rue des canadiens" disabled />
+            </div>
+            <div class="form__field">
+                <span class="form__field__name">Code postal</span>
+                <input type="text" class="input-default" value="76500" disabled />
+            </div>
+            <div class="form__field">
+                <span class="form__field__name">Ville</span>
+                <input type="text" class="input-default" value="La Londe" disabled />
+            </div>
+            <input type="submit" value="Réserver" class="btn btn--blue form__submit" />
+        </form>
+    </section>
+{% endblock %}

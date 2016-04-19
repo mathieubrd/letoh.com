@@ -1,0 +1,57 @@
+{% extends 'base.twig' %}
+
+{% block content %}
+<section class="section">
+    <h2>Créer un compte</h2>
+    <p>
+        Afin de pouvoir réserver une chambre d'hotel sur Letoh.com, vous devez créer un compte.<br />
+        Vos informations personnelles (adresse) pourront être sauvegardées pour vous faire gagner du temps lors de vos prochaines réservations.
+    </p>
+    <div class="signup">
+        {{ form_start(form) }}
+            <div class="form__field">
+                <span class="form__field__name">{{ form_label(form.mail) }}</span>
+                {{ form_widget(form.mail, {'attr': {'class': 'input-default'}}) }}
+                <div class="form__field__error">{{ form_errors(form.mail) }}</div>
+            </div>
+            <div class="form__field">
+                <span class="form__field__name">{{ form_label(form.password.first) }}</span>
+                {{ form_widget(form.password.first, {'attr': {'class': 'input-default'}}) }}
+                <div class="form__field__error">{{ form_errors(form.password.first) }}</div>
+            </div>
+            <div class="form__field">
+                <span class="form__field__name">{{ form_label(form.password.second) }}</span>
+                {{ form_widget(form.password.second, {'attr': {'class': 'input-default'}}) }}
+                <div class="form__field__error">{{ form_errors(form.password.second) }}</div>
+            </div>
+            <div class="form__separator"></div>
+            <div class="form__field">
+                <span class="form__field__name">{{ form_label(form.lastName) }}</span>
+                {{ form_widget(form.lastName, {'attr': {'class': 'input-default'}}) }}
+                <div class="form__field__error">{{ form_errors(form.lastName) }}</div>
+            </div>
+            <div class="form__field">
+                <span class="form__field__name">{{ form_label(form.firstName) }}</span>
+                {{ form_widget(form.firstName, {'attr': {'class': 'input-default'}}) }}
+                <div class="form__field__error">{{ form_errors(form.firstName) }}</div>
+            </div>
+            <div class="form__field">
+                <span class="form__field__name">{{ form_label(form.address) }}</span>
+                {{ form_widget(form.address, {'attr': {'class': 'input-default'}}) }}
+                <div class="form__field__error">{{ form_errors(form.address) }}</div>
+            </div>
+            <div class="form__field">
+                <span class="form__field__name">{{ form_label(form.town) }}</span>
+                {{ form_widget(form.town, {'attr': {'class': 'input-default'}}) }}
+                <div class="form__field__error">{{ form_errors(form.town) }}</div>
+            </div>
+            <div class="form__field">
+                <span class="form__field__name">{{ form_label(form.phoneNumber) }}</span>
+                {{ form_widget(form.phoneNumber, {'attr': {'class': 'input-default'}}) }}
+                <div class="form__field__error">{{ form_errors(form.phoneNumber) }}</div>
+            </div>
+            {{ form_widget(form.register, {'attr': {'class': 'btn btn--blue form__submit'}}) }}
+        {{ form_end(form) }}
+    </div>
+</section>
+{% endblock %}

@@ -1,0 +1,96 @@
+{% extends 'base.twig' %}
+
+{% block content %}
+<section class="section">
+    <div class="search-hotels">
+        <h2>Rechercher des hôtels</h2>
+        <form id="search-form" action="/search" method="post">
+            <input type="text" name="town" class="input-default search-hotels__search-bar"
+                   placeHolder="Rechercher par ville (ex. Paris)" /><br />
+            <div class="search-hotels__book-dates">
+                <div class="book-date">
+                    <span class="book-date__from">du</span>
+                    <input type="text" id="from-date" name="from" class="input-default book-date__from-date" />
+                    <span class="book-date__to">au</span>
+                    <input type="text" id="to-date" name="to" class="input-default book-date__to-date" />
+                </div>
+            </div>
+            <input type="submit" value="Letoh !" class="btn btn--blue" />
+        </form>
+    </div>
+
+    <h3>Statistiques</h3>
+    <div class="stats">
+        <table>
+            <tr>
+                <td class="stats__number">{{ hotelCount }}</td>
+                <td>hôtel(s) referencé(s)</td>
+            </tr>
+            <tr>
+                <td class="stats__number">{{ hotelRoomCount }}</td>
+                <td>chambre(s) reservée(s)</td>
+            </tr>
+            <tr>
+                <td class="stats__number">{{ customerCount }}</td>
+                <td>membre(s) inscrit(s)</td>
+            </tr>
+        </table>
+    </div>
+</section>
+{%  endblock %}
+
+{% block script %}
+    <script>
+        $(function() {
+            var date = new Date();
+            $.datepicker.setDefaults($.datepicker.regional['fr']);
+            $('#from-date').datepicker();
+            $('#from-date').datepicker('option', 'minDate', 0);
+            $('#from-date').datepicker('setDate', date);
+            date.setDate(date.getDate() + 1)
+            $('#to-date').datepicker();
+            $('#to-date').datepicker('option', 'minDate', 1);
+            $('#to-date').datepicker('setDate', date);
+
+            $('#search-form').submit(function(event) {
+                var minPrice = $('.price-range__slider').slider('values')[0];
+                var maxPrice = $('.price-range__slider').slider('values')[1];
+            });
+        });
+
+        /**
+        $('#search-form').submit(function(event) {
+            var formInputs = $(this).serializeArray();
+            var minPrice = $('.filter__price-range .range__slider').slider('values', 0);
+            var maxPrice = $('.filter__price-range .range__slider').slider('values', 1);
+            var minRating = $('.filter__rating-range .range__slider').slider('values', 0);
+            var maxRating = $('.filter__rating-range .range__slider').slider('values', 1);
+            var roomType = $('.filter input[name=roomType]:checked').val();
+
+            var dateSplit = formInputs[1]['value'].split('/');
+            var fromDate = dateSplit[2]+'-'+dateSplit[1]+'-'+dateSplit[0];
+
+            dateSplit = formInputs[2]['value'].split('/');
+            var toDate = dateSplit[2]+'-'+dateSplit[1]+'-'+dateSplit[0];
+
+
+            var search = new Object();
+            search.town = formInputs[0]['value'];
+            search.fromDate = fromDate;
+            search.toDate = toDate;
+            search.minPrice = minPrice;
+            search.maxPrice = maxPrice;
+            search.minRating = minRating;
+            search.maxRating = maxRating;
+            search.roomType = roomType;
+
+            var url = search.town+'/'+search.fromDate+'/'+search.toDate+'/'+search.minPrice+'/'+search.maxPrice+
+                    '/'+search.minRating+'/'+search.maxRating+'/'+search.roomType;
+
+            window.location.href = 'search/' + url;
+
+            return false;
+        });
+        **/
+    </script>
+{% endblock script %}

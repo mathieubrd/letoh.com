@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Letoh.com | Site de réservation d'hôtel</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" type="text/css" href="{{ app.request.basepath }}/web/css/style.css" />
+    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/smoothness/jquery-ui.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.2/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
+    <script src="http://jquery-ui.googlecode.com/svn/tags/latest/ui/minified/i18n/jquery-ui-i18n.min.js"></script>
+</head>
+<body>
+
+<header class="header">
+    <a href="{{ app.url_generator.generate('home') }}">
+        <img class="header__logo" src="{{ app.request.basepath }}/web/img/logo.png" />
+    </a>
+    <span class="header__slog">Premier site de réservation d'hotel, au monde.</span>
+    <div class="header__auth">
+        <div class="auth">
+            <img src="{{ app.request.basepath }}/web/img/profil.png" class="auth__profile-picture" />
+            <div class="auth__links">
+                {% if app.user %}
+                    {{ app.user.username }}<br />
+                    <a href="{{ path('account') }}">Mon compte</a> | <a href="{{ path('account_logout') }}">Se déconnecter</a>
+                {% else %}
+                    <a href="{{ app.url_generator.generate('login') }}">se connecter</a><br />
+                    <a href="{{ app.url_generator.generate('signup') }}">créer un compte</a>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</header>
+
+{% block aside %} {% endblock %}
+
+{% block content %} {%  endblock %}
+
+<div class="clearfix" />
+
+<footer class="footer">
+    <p>
+        Letoh.com &copy;2016<br />
+        Tous droits reservés.
+    </p>
+</footer>
+
+{% block script %} {% endblock %}
+
+</body>
+</html>

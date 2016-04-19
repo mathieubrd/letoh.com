@@ -1,0 +1,38 @@
+{% extends 'base.twig' %}
+
+{% block content %}
+    <section class="section">
+        <div class="hotel-page">
+            <div class="hotel-list hotel-list--no-border">
+                <img class="hotel-list__img hotel-list__img--big" src="{{ app.request.basepath }}/web/img/hotels/1.jpg" />
+                <div class="hotel-list__description">
+                    <h2 class="hotel-list__title">"{{ hotel.name }}"</h2>
+                    <span class="hotel-list__town">{{ townName }}</span>
+                    <div class="hotel-list__rating">Note : {{ hotel.rating }} étoile(s)</div>
+                    <div class="hotel-list__available-rooms">{{ hotelRooms|length }} chambre(s) disponible(s)</div>
+                </div>
+            </div>
+            <div class="available-rooms">
+                <h3>{{ hotelRooms|length }} chambre(s) disponible(s) selon vos critères</h3>
+                {% for hotelRoom in hotelRooms %}
+                    <div class="hotel-list">
+                        <img class="hotel-list__img" src="{{ app.request.basepath }}/web/img/hotels/1.jpg" />
+                        <div class="hotel-list__description">
+                            <h4 class="hotel-list__title">Chambre {{ hotelRoom.capacity }} personne(s)</h4>
+                            {% if hotelRoom.type == 1 %}
+                                {% set type = 'Privative' %}
+                            {% else %}
+                                {% set type = 'Dortoir' %}
+                            {% endif %}
+                            <div class="room-list__room-type">Type : {{ type }}</div>
+                        </div>
+                        <div class="hotel-list__right">
+                            <div class="hotel-list__right__price">{{ hotelRoom.price }}€ / nuit</div>
+                            <button class="horel-list__right__book btn btn--blue">Réserver</button>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+{% endblock %}

@@ -1,0 +1,359 @@
+@font-face {
+    font-family: "OpenSans";
+    src: url("../fonts/OpenSans-Regular.ttf");
+}
+
+html {
+    background: #F0F0F0;
+}
+
+body {
+    width: 900px;
+    margin: 10px auto 0 auto;
+    font-family: "OpenSans", sans-serif;
+    font-size: 100%;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+a {
+    text-decoration: none;
+    color: rgb(0, 53, 92);
+}
+
+h1, h2, h3, h4, h5, h6 {
+    color: rgb(0, 53, 92);
+}
+
+.clearfix {
+    clear: both;
+}
+
+.input-default {
+    width: 150px;
+    height: 20px;
+    padding: 0 5px 0 5px;
+    border: 1px solid gray;
+    border-radius: 3px;
+}
+
+.btn {
+    padding: 7px 20px 7px 20px;
+    font-size: 90%;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.btn--blue {
+    background: rgb(0, 53, 92);
+    color: white;
+}
+
+.form__separator {
+    width: 200px;
+    margin: 10px auto 10px auto;
+    border-bottom: 1px solid #CECECE;
+}
+
+.form__field {
+    margin-bottom: 5px;
+}
+
+.form__field__name {
+    float: left;
+    width: 200px;
+    text-align: right;
+    margin-right: 10px;
+}
+
+.form__field__error {
+    font-size: 70%;
+    margin-left: 160px;
+    color: red;
+}
+
+.form__field__error ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.form__submit {
+    margin: 10px 0 0 209px;
+}
+
+.header {
+    height: 60px;
+    line-height: 60px;
+    padding: 0 10px 0 10px;
+    border-bottom: 1px solid #CECECE;
+}
+
+.header__logo {
+    height: 50px;
+    margin: 3px 10px 0 0;
+    padding: 0 10px 0 0;
+    float: left;
+}
+
+.header__slog {
+    display: inline-block;
+    margin: 0;
+    padding: 8px 0 0 0;
+    font-size: 80%;
+    font-style: italic;
+}
+
+.header__auth {
+    float: right;
+    margin-top: 6px;
+}
+
+.auth {
+    height: 40px;
+    line-height: 40px;
+}
+
+.auth__profile-picture {
+    height: 35px;
+    padding: 2px;
+    margin-right: 5px;
+    float: left;
+    border: 1px solid #CECECE;
+}
+
+.auth__links {
+    float: right;
+    margin-top: 0.1em;
+    line-height: 1.2em;
+    font-size: 90%;
+}
+
+.aside-filters {
+    width: 160px;
+    height: 420px;
+    padding: 10px;
+    float: left;
+    border-right: 1px solid #CECECE;
+    border-top: 0;
+}
+
+.aside-filters__title {
+    margin: 0 0 10px 0;
+    padding: 0;
+}
+
+.filter {
+    border-bottom: 1px solid #CECECE;
+    padding: 5px 0 5px 0;
+    font-size: 90%;
+}
+
+.filter--last {
+    border-bottom: none;
+}
+
+.filter__title {
+    display: block;
+    margin-bottom: 5px;
+    color: rgb(0, 53, 92);
+}
+
+.filter__btn {
+    margin-top: 10px;
+    text-align: center;
+}
+
+.section {
+    padding: 10px;
+}
+
+.section--float-right {
+    width: 690px;
+    float: right;
+}
+
+.section__search-hotels {
+    margin-bottom: 10px;
+}
+
+.search-hotels {
+    text-align: center;
+}
+
+.search-hotels__book-dates {
+    margin-bottom: 10px;
+}
+
+.hotel-list {
+    border-bottom: 1px solid #CECECE;
+    padding: 10px 5px 10px 5px;
+}
+
+.hotel-list--no-border {
+    border: none;
+}
+
+.hotel-list__title {
+    margin: 0;
+    display: inline-block;
+}
+
+.hotel-list__town {
+    display: inline-block;
+    color: gray;
+}
+
+.hotel-list__img {
+    width: 130px;
+    margin-right: 10px;
+    display: inline-block;
+}
+
+.hotel-list__img--big {
+    width: 250px;
+}
+
+.hotel-list__description {
+    display: inline-block;
+    vertical-align: top;
+}
+
+.hotel-list__available-rooms {
+    font-weight: bold;
+}
+
+.hotel-list__right {
+    display: inline-block;
+    float: right;
+}
+
+.hotel-list__right__price {
+    font-weight: bold;
+    margin-bottom: 5px;
+    color: rgb(0, 53, 92);
+}
+
+.search-hotels__search-bar {
+    width: 300px;
+    margin: 0 0 10px 0;
+    font-size: 90%;
+}
+
+.stats__number {
+    color: rgb(0, 53, 92);
+    font-weight: bold;
+}
+
+.hotel-page__title {
+    border-bottom: 1px solid #CECECE;
+}
+
+.hotel-page__picture {
+    width: 300px;
+    height: 300px;
+    padding: 2px;
+    border: 1px solid #CECECE;
+    overflow: hidden;
+}
+
+.room-list {
+    border-bottom: 1px solid #CECECE;
+    padding: 10px;
+}
+
+.hotel-page__picture img {
+    width: 300px;
+}
+
+.room-list__picture {
+    width: 150px;
+    margin-right: 10px;
+    display: inline-block;
+    overflow: hidden;
+    vertical-align: top;
+}
+
+.room-list__picture img {
+    width: 150px;
+}
+
+.room-list__description {
+    display: inline-block;
+}
+
+.room-list__title {
+    margin: 0;
+}
+
+.room-list__room-type {
+    color: gray;
+}
+
+.book-date__from-date {
+    width: 80px;
+}
+
+.book-date__to-date {
+    width: 80px;
+}
+
+.signup {
+    margin: auto;
+    width: 500px;
+}
+
+.footer {
+    text-align: center;
+    font-size: 80%;
+    color: gray;
+}
+
+.table {
+    border-collapse: collapse;
+}
+
+.table td, th {
+    padding: 5px 10px 5px 10px;
+}
+
+.table th:not(:last-child), .table td:not(:last-child) {
+    border-right: 1px solid white;
+}
+
+.table th {
+    color: rgb(0, 53, 92);
+}
+
+.table tr:nth-child(odd) {
+    background: #DADADA;
+}
+
+.range .ui-slider-horizontal {
+    height: 8px;
+}
+
+.range .ui-slider .ui-slider-handle {
+    width: 8px;
+    height: 10px;
+    margin: 3px 0 0 -8px;
+    border: 1px solid gray;
+}
+
+.range .ui-slider .ui-slider-handle:focus {
+    outline: none;
+}
+
+.range__min-value, .range__max-value {
+    display: inline-block;
+    color: gray;
+    font-size: 80%;
+}
+
+.range__max-value {
+    margin-top: 2px;
+    float: right;
+}

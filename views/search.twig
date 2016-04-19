@@ -1,0 +1,35 @@
+{% extends 'base.twig' %}
+
+{% block aside %}
+    {% include 'aside.twig' with {
+        'minPrice': allMinPrice,
+        'maxPrice': allMaxPrice
+    } %}
+{% endblock %}
+
+{% block content %}
+    <section class="section section--float-right">
+        <h3>{{ hotels|length }} hôtel(s) à {{ town }} selon vos critères</h3>
+
+        {% for hotel in hotels %}
+            <div class="hotel-list">
+                <img class="hotel-list__img" src="{{ app.request.basepath }}/web/img/hotels/1.jpg" />
+                <div class="hotel-list__description">
+                    <h4 class="hotel-list__title">"{{ hotel.name }}"</h4>
+                    <div class="hotel-list__rating">Note : {{ hotel.rating }} étoile(s)</div>
+                    <div class="hotel-list__available-rooms">{{ hotels[loop.index0].hotelRoomCount }} chambres disponibles</div>
+                </div>
+                <div class="hotel-list__right">
+                    <div class="hotel-list__right__price">{{ hotels[loop.index0].minPrice }}€ / nuit</div>
+                    <a href="/hotel/{{ hotel.id }}">
+                        <button class="horel-list__right__book btn btn--blue">Réserver</button>
+                    </a>
+                </div>
+            </div>
+        {% endfor %}
+
+        {% if hotels|length > 0 %}
+            <small><i>Le prix affiché est le celui de la chambre disponible la moins chère</i></small>
+        {% endif %}
+    </section>
+{% endblock %}
