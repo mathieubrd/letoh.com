@@ -17,7 +17,6 @@ class SearchController {
         $toDate = str_replace('/', '-', $toDate);
         $fromDate = strtotime($fromDate);
         $toDate = strtotime($toDate);
-
         $fromDate = date('Y-m-d', $fromDate);
         $toDate = date('Y-m-d', $toDate);
 

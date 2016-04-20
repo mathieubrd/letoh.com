@@ -6,7 +6,7 @@
         <h3>Hotel : "Le Pourpauvres"</h3>
         <h5>Chambre de {{ hotelRoom.capacity }} personne(s) - du {{ fromDate }} au {{ toDate }}</h5>
         <h4>Total : {{ totalPrice }}€</h4>
-        <form method="post" action="">
+        <form action="{{ path('book_confirm') }}" method="post">
             <div class="form__field">
                 <span class="form__field__name">Adresse e-mail</span>
                 <input type="text" class="input-default" value="mathieu.brochard76@free.fr" disabled />
@@ -24,12 +24,10 @@
                 <input type="text" class="input-default" value="La Londe" disabled />
             </div>
 
-            <form action="{{ path('book_confirm') }}" method="post">
-                <input type="hidden" name="hotelRoomId" value="{{ hotelRoom.id }}" />
-                <input type="hidden" name="fromDate" value="{{ hotelRoom.id }}" />
-                <input type="hidden" name="toDate" value="{{ hotelRoom.id }}" />
-                <input type="submit" value="Réserver" class="btn btn--blue form__submit" />
-            </form>
+            <input type="hidden" name="idHotelRoom" value="{{ hotelRoom.id }}" />
+            <input type="hidden" name="fromDate" value="{{ fromDate }}" />
+            <input type="hidden" name="toDate" value="{{ toDate }}" />
+            <input type="submit" value="Réserver" class="btn btn--blue form__submit" />
         </form>
     </section>
 {% endblock %}

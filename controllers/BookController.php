@@ -50,4 +50,44 @@ class BookController {
         ));
     }
 
+    public function confirmAction(Request $req, Application $app) {
+        $idHotelRoom = $req->get('idHotelRoom');
+        $arrival = $req->get('fromDate');
+        $departure = $req->get('toDate');
+
+        // Transformation des dates
+        $arrival = str_replace('/', '-', $arrival);
+        $departure = str_replace('/', '-', $departure);
+        $arrival = strtotime($arrival);
+        $departure = strtotime($departure);
+        $arrival = date('Y-m-d', $arrival);
+        $departure = date('Y-m-d', $departure);
+
+        $user = $app['db']->createQueryBuilder()
+            ->select('c.id')
+            ->from('Customer', 'c')
+            ->where('c.mail = ?')
+            ->setParameter(0, $app['security.token_storage']->getToken()->getUser()->getUsername())
+            ->execute()
+            ->fetch();
+
+        $app['db']->createQueryBuilder()
+            ->insert('Booking')
+            ->values(
+                array(
+                    'idHotelRoom' => '?',
+                    'idCustomer' => '?',
+                    'arrival' => '?',
+                    'departure' => '?',
+                )
+            )
+            ->setParameter(0, $idHotelRoom)
+            ->setParameter(1, $user['id'])
+            ->setParameter(2, $arrival)
+            ->setParameter(3, $departure)
+            ->execute();
+
+        return $app['twig']->render('book_confirm.twig');
+    }
+
 }
