@@ -15,9 +15,9 @@ class BookController {
 
     public function indexAction(Request $req, Application $app) {
         // Récupère les attributs de la requête
-        $idRoom = $req->attributes->get('idRoom');
-        $fromDate = $req->attributes->get('fromDate');
-        $toDate = $req->attributes->get('toDate');
+        $idRoom = $req->get('idRoom');
+        $fromDate = $req->get('fromDate');
+        $toDate = $req->get('toDate');
 
         // Calcul la différence en nombre de jours entre les deux dates
         $fromDate = date_create_from_format('d-m-y', $fromDate);
