@@ -9,6 +9,17 @@ class SearchController {
 
 	public function indexAction(Request $req, Application $app) {
         $town = strtoupper($req->get('town'));
+        $fromDate = $req->get('from');
+        $toDate = $req->get('to');
+
+        // Transformation des dates
+        $fromDate = str_replace('/', '-', $fromDate);
+        $toDate = str_replace('/', '-', $toDate);
+        $fromDate = strtotime($fromDate);
+        $toDate = strtotime($toDate);
+
+        $fromDate = date('Y-m-d', $fromDate);
+        $toDate = date('Y-m-d', $toDate);
 
         $hotels = $app['db']->createQueryBuilder()
             ->select('h.id, h.name, h.rating, COUNT(hr.idHotel) as hotelRoomCount, MIN(hr.price) as minPrice')
@@ -38,6 +49,8 @@ class SearchController {
             'hotels' => $hotels,
             'allMinPrice' => $allMinPrice,
             'allMaxPrice' => $allMaxPrice,
+            'fromDate' => $fromDate,
+            'toDate' => $toDate,
         ));
 	}
 

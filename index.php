@@ -60,11 +60,11 @@ $app['security.access_rules'] = array(
 
 $app->get('/', 'Letoh\Controller\IndexController::indexAction')->bind('home');
 $app->post('/search', 'Letoh\Controller\SearchController::indexAction')->bind('search');
-$app->get('/hotel/{id}', 'Letoh\Controller\HotelController::indexAction')->bind('hotel');
+$app->get('/hotel/{id}/{fromDate}/{toDate}', 'Letoh\Controller\HotelController::indexAction')->bind('hotel');
 $app->match('/signup', 'Letoh\Controller\SignupController::indexAction')->bind('signup');
 $app->get('/signup/success', 'Letoh\Controller\SignupController::successAction')->bind('signup_success');
 $app->get('/login', 'Letoh\Controller\LoginController::indexAction')->bind('login');
-$app->get('/book/{idRoom}/{fromDate}/{toDate}', 'Letoh\Controller\BookController::indexAction')->bind('book');
+$app->post('/book', 'Letoh\Controller\BookController::indexAction')->bind('book');
 $app->match('/account', 'Letoh\Controller\AccountController::indexAction')->bind('account');
 
 /**
