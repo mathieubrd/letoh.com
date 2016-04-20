@@ -1,5 +1,5 @@
 # Letoh.com
-Letoh.com est un site de réservation d'hôtel réalisé en PHP avec Silex.
+Letxh.com est un site de réservation d'hôtel réalisé en PHP avec Silex.
 
 ## Installation
 Clonez le dépôt :
