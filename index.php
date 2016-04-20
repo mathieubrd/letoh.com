@@ -78,4 +78,65 @@ $app->match('/account', 'Letoh\Controller\AccountController::indexAction')->bind
  * });
  */
 
+// Création du schéma de la base de données
+$schema = new \Doctrine\DBAL\Schema\Schema();
+$sm = $app['db']->getSchemaManager();
+
+if (count($sm->listTableDetails('Hotel')->getColumns()) == 0) {
+    $table = $schema->createTable('Hotel');
+    $table->addColumn('id', 'integer', array('autoincrement' => true));
+    $table->addColumn('idTown', 'integer', array('notnull' => true));
+    $table->addColumn('name', 'string', array('notnull' => true));
+    $table->addColumn('address', 'string', array('notnull' => true));
+    $table->addColumn('rating', 'integer', array('notnull' => true));
+    $table->setPrimaryKey(array('id'));
+}
+if (count($sm->listTableDetails('HotelRoom')->getColumns()) == 0) {
+    $table = $schema->createTable('HotelRoom');
+    $table->addColumn('id', 'integer', array('autoincrement' => true));
+    $table->addColumn('idHotel', 'integer', array('notnull' => true));
+    $table->addColumn('capcity', 'integer', array('notnull' => true));
+    $table->addColumn('type', 'integer', array('notnull' => true));
+    $table->addColumn('price', 'decimal', array('notnull' => true));
+    $table->setPrimaryKey(array('id'));
+}
+if (count($sm->listTableDetails('Customer')->getColumns()) == 0) {
+    $table = $schema->createTable('Customer');
+    $table->addColumn('id', 'integer', array('autoincrement' => true));
+    $table->addColumn('lastName', 'string', array('notnull' => true));
+    $table->addColumn('firstName', 'string', array('notnull' => true));
+    $table->addColumn('address', 'string', array('notnull' => true));
+    $table->addColumn('phoneNumber', 'string', array('notnull' => true));
+    $table->addColumn('mail', 'string', array('notnull' => true));
+    $table->addColumn('password', 'string', array('notnull' => true));
+    $table->addColumn('roles', 'string', array('notnull' => true, 'default' => 'ROLE_USER'));
+    $table->setPrimaryKey(array('id'));
+}
+if (count($sm->listTableDetails('Town')->getColumns()) == 0) {
+    $table = $schema->createTable('Town');
+    $table->addColumn('id', 'integer', array('autoincrement' => true));
+    $table->addColumn('name', 'string', array('notnull' => true));
+    $table->addColumn('latitude', 'string', array('notnull' => true));
+    $table->addColumn('longitude', 'string', array('notnull' => true));
+    $table->setPrimaryKey(array('id'));
+}
+if (count($sm->listTableDetails('Booking')->getColumns()) == 0) {
+    $table = $schema->createTable('Booking');
+    $table->addColumn('id', 'integer', array('autoincrement' => true));
+    $table->addColumn('idHotelRoom', 'integer', array('notnull' => true));
+    $table->addColumn('idCustomer', 'integer', array('notnull' => true));
+    $table->addColumn('arrival', 'string', array('notnull' => true));
+    $table->addColumn('departure', 'string', array('notnull' => true));
+    $table->setPrimaryKey(array('id'));
+}
+
+$queries = $schema->toSql($app['db']->getDatabasePlatform());
+
+foreach ($queries as $query) {
+    $app['db']->query($query);
+}
+
+// Modifications droits base de données
+chmod('letoh.db', 0764);
+
 $app->run();
