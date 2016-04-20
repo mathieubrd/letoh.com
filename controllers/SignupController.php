@@ -114,7 +114,7 @@ class SignupController {
                 ->setParameter(5, $data['phoneNumber'])
                 ->execute();
 
-            return $app->redirect('/signup/success');
+            return $app->redirect($app['url_generator']->generate('signup_success'));
         }
 
         return $app['twig']->render('signup.twig', array('form' => $form->createView()));
