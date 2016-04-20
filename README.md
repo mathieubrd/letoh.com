@@ -9,7 +9,7 @@ git clone https://github.com/mathieubrochard/letohcom.git
 
 Vous devez installer les dépendances. Pour cela, assuez vous d'avoir `composer` d'installé et de configuré.
 ```
-composer update
+composer install
 ```
 
 Une base de données SQLite est quelques données est fournie.
