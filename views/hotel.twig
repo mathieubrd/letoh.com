@@ -28,9 +28,12 @@
                         </div>
                         <div class="hotel-list__right">
                             <div class="hotel-list__right__price">{{ hotelRoom.price }}€ / nuit</div>
-                            <a href="{{ path('book', { 'idRoom': hotelRoom.id, 'fromDate': }) }}">
-                                <button class="horel-list__right__book btn btn--blue">Réserver</button>
-                            </a>
+                            <form action="{{ path('book') }}" method="post">
+                                <input type="hidden" name="idRoom" value="{{ hotelRoom.id }}" />
+                                <input type="hidden" name="fromDate" value="{{ fromDate }}" />
+                                <input type="hidden" name="toDate" value="{{ toDate }}" />
+                                <input type="submit" class="horel-list__right__book btn btn--blue" value="Réserver" />
+                            </form>
                         </div>
                     </div>
                 {% endfor %}

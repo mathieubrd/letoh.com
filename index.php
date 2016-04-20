@@ -95,7 +95,7 @@ if (count($sm->listTableDetails('HotelRoom')->getColumns()) == 0) {
     $table = $schema->createTable('HotelRoom');
     $table->addColumn('id', 'integer', array('autoincrement' => true));
     $table->addColumn('idHotel', 'integer', array('notnull' => true));
-    $table->addColumn('capcity', 'integer', array('notnull' => true));
+    $table->addColumn('capacity', 'integer', array('notnull' => true));
     $table->addColumn('type', 'integer', array('notnull' => true));
     $table->addColumn('price', 'decimal', array('notnull' => true));
     $table->setPrimaryKey(array('id'));

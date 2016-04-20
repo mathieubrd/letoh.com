@@ -14,6 +14,9 @@ use Symfony\Component\HttpFoundation\Request;
 class HotelController {
 
     public function indexAction(Request $req, Application $app) {
+        $fromDate = $req->attributes->get('fromDate');
+        $toDate = $req->attributes->get('toDate');
+
         // Récupère de l'hotel
         $qb = $app['db']->createQueryBuilder();
         $qb
@@ -43,7 +46,9 @@ class HotelController {
         return $app['twig']->render('hotel.twig', array(
             'hotel' => $hotel,
             'townName' => ucfirst(strtolower($townName)),
-            'hotelRooms' => $hotelRooms));
+            'hotelRooms' => $hotelRooms,
+            'fromDate' => $fromDate,
+            'toDate' => $toDate));
     }
 
 }
