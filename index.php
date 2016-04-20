@@ -65,6 +65,7 @@ $app->match('/signup', 'Letoh\Controller\SignupController::indexAction')->bind('
 $app->get('/signup/success', 'Letoh\Controller\SignupController::successAction')->bind('signup_success');
 $app->get('/login', 'Letoh\Controller\LoginController::indexAction')->bind('login');
 $app->post('/book', 'Letoh\Controller\BookController::indexAction')->bind('book');
+$app->post('/book/confirm', 'Letoh\Controller\BookController::confirmAction')->bind('book_confirm');
 $app->match('/account', 'Letoh\Controller\AccountController::indexAction')->bind('account');
 
 /**

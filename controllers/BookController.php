@@ -26,7 +26,7 @@ class BookController {
 
         // Récupère la chambre d'hôtel concernée
         $hotelRoom = $app['db']->createQueryBuilder()
-            ->select('hr.capacity, hr.price')
+            ->select('hr.capacity, hr.price, hr.id')
             ->from('HotelRoom', 'hr')
             ->where('hr.id = ?')
             ->setParameter(0, $idRoom)
@@ -45,6 +45,8 @@ class BookController {
         return $app['twig']->render('book.twig', array(
             'hotelRoom' => $hotelRoom,
             'totalPrice' => $totalPrice,
+            'fromDate' => $fromDate->format('d/m/Y'),
+            'toDate' => $toDate->format('d/m/Y'),
         ));
     }
 

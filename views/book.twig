@@ -4,7 +4,7 @@
     <section class="section">
         <h2>Réservation d'une chambre</h2>
         <h3>Hotel : "Le Pourpauvres"</h3>
-        <h5>Chambre de {{ hotelRoom.capacity }} personne(s) - du 12/04/2016 au 13/04/2016</h5>
+        <h5>Chambre de {{ hotelRoom.capacity }} personne(s) - du {{ fromDate }} au {{ toDate }}</h5>
         <h4>Total : {{ totalPrice }}€</h4>
         <form method="post" action="">
             <div class="form__field">
@@ -23,7 +23,13 @@
                 <span class="form__field__name">Ville</span>
                 <input type="text" class="input-default" value="La Londe" disabled />
             </div>
-            <input type="submit" value="Réserver" class="btn btn--blue form__submit" />
+
+            <form action="{{ path('book_confirm') }}" method="post">
+                <input type="hidden" name="hotelRoomId" value="{{ hotelRoom.id }}" />
+                <input type="hidden" name="fromDate" value="{{ hotelRoom.id }}" />
+                <input type="hidden" name="toDate" value="{{ hotelRoom.id }}" />
+                <input type="submit" value="Réserver" class="btn btn--blue form__submit" />
+            </form>
         </form>
     </section>
 {% endblock %}
