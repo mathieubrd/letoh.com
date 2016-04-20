@@ -2,8 +2,6 @@
 
 namespace Letoh\Controller;
 
-require_once 'model/Hotel.php';
-
 use Silex\Application;
 use Symfony\Component\HttpFoundation\Request;
 use Letoh\Model\Hotel;

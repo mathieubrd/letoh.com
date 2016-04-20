@@ -10,7 +10,6 @@ namespace Letoh\Controller;
 
 use Silex\Application;
 use Symfony\Component\HttpFoundation\Request;
-use Letoh\Model;
 
 class BookController {
 
