@@ -20,11 +20,8 @@ class BookController {
         $toDate = $req->get('toDate');
 
         // Calcul la différence en nombre de jours entre les deux dates
-        $fromDate = date_create_from_format('d-m-y', $fromDate);
-        $toDate = date_create_from_format('d-m-y', $toDate);
-        if (!$fromDate || !$toDate) {
-            return $app['twig']->render('error.twig', array('errorCode' => 500));
-        }
+        $fromDate = date_create($fromDate);
+        $toDate = date_create($toDate);
         $dateDiff = date_diff($fromDate, $toDate, true);
 
         // Récupère la chambre d'hôtel concernée
