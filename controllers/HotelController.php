@@ -2,13 +2,8 @@
 
 namespace Letoh\Controller;
 
-require_once 'model/Hotel.php';
-require_once 'model/HotelRoom.php';
-
 use Silex\Application;
 use Symfony\Component\HttpFoundation\Request;
-use Letoh\Model\Hotel;
-use Letoh\Model\HotelRoom;
 
 /**
  * Created by PhpStorm.
