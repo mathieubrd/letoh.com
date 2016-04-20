@@ -59,7 +59,7 @@ $app['security.access_rules'] = array(
 );
 
 $app->get('/', 'Letoh\Controller\IndexController::indexAction')->bind('home');
-$app->post('/search', 'Letoh\Controller\SearchController::indexAction');
+$app->post('/search', 'Letoh\Controller\SearchController::indexAction')->bind('search');
 $app->get('/hotel/{id}', 'Letoh\Controller\HotelController::indexAction');
 $app->match('/signup', 'Letoh\Controller\SignupController::indexAction')->bind('signup');
 $app->get('/signup/success', 'Letoh\Controller\SignupController::successAction')->bind('signup_success');

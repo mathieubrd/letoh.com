@@ -4,7 +4,7 @@
 <section class="section">
     <div class="search-hotels">
         <h2>Rechercher des hôtels</h2>
-        <form id="search-form" action="/search" method="post">
+        <form id="search-form" action="{{ path('search') }}" method="post">
             <input type="text" name="town" class="input-default search-hotels__search-bar"
                    placeHolder="Rechercher par ville (ex. Paris)" /><br />
             <div class="search-hotels__book-dates">
