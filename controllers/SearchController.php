@@ -31,16 +31,21 @@ class SearchController {
             ->execute()
             ->fetchAll();
 
-        // Recherche le prix le plus bas de tous les hôtels
-        $allMinPrice = PHP_INT_MAX;
-        foreach ($hotels as $hotel) {
-            $allMinPrice = min($allMinPrice, $hotel['minPrice']);
-        }
+        if (count($hotels) > 0) {
+            // Recherche le prix le plus bas de tous les hôtels
+            $allMinPrice = PHP_INT_MAX;
+            foreach ($hotels as $hotel) {
+                $allMinPrice = min($allMinPrice, $hotel['minPrice']);
+            }
 
-        // Recherche le prix le plus haut de tous les hôtels
-        $allMaxPrice = 0;
-        foreach ($hotels as $hotel) {
-            $allMaxPrice = max($allMaxPrice, $hotel['minPrice']);
+            // Recherche le prix le plus haut de tous les hôtels
+            $allMaxPrice = 0;
+            foreach ($hotels as $hotel) {
+                $allMaxPrice = max($allMaxPrice, $hotel['minPrice']);
+            }
+        } else {
+            $allMinPrice = 0;
+            $allMaxPrice = 0;
         }
 
         return $app['twig']->render('search.twig', array(
