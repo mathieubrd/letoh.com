@@ -5,25 +5,25 @@
         <h2>Mon compte</h2>
 
         <h3>Mes réservations</h3>
-        <table class="table">
-            <tr>
-                <th>Réservation n°</th>
-                <th>Dates</th>
-                <th>Hotel</th>
-                <th>Total</th>
-            </tr>
-            <tr>
-                <td>3455643</td>
-                <td>12/04/16 - 14/04/16</td>
-                <td>Le Pourpauvres</td>
-                <td>37,67€</td>
-            </tr>
-            <tr>
-                <td>3455643</td>
-                <td>12/04/16 - 14/04/16</td>
-                <td>Le Pourpauvres</td>
-                <td>37,67€</td>
-            </tr>
-        </table>
+        {% if booking|length > 0 %}
+            <table class="table">
+                <tr>
+                    <th>Réservation n°</th>
+                    <th>Dates</th>
+                    <th>Hotel</th>
+                    <th>Total</th>
+                </tr>
+                {% for book in booking %}
+                    <tr>
+                        <td>{{ book.id }}</td>
+                        <td>{{ book.arrival|date('d/m/Y') }} - {{ book.departure|date('d/m/Y') }}</td>
+                        <td>{{ book.hotelName }}</td>
+                        <td>{{ prices[loop.index0] }}€</td>
+                    </tr>
+                {% endfor %}
+            </table>
+        {% else %}
+            <h4>Vous n'avez effectué aucune réservation.</h4>
+        {% endif %}
     </section>
 {% endblock %}
