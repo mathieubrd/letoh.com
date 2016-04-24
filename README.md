@@ -12,4 +12,4 @@ Vous devez installer les dépendances. Pour cela, assuez vous d'avoir `composer`
 composer install
 ```
 
-Une base de données SQLite est quelques données est fournie.
+Une base de données SQLite vide est créée automatiquement, à vous de la remplire.
