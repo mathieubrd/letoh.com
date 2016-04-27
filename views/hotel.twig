@@ -7,19 +7,19 @@
                 <img class="hotel-list__img hotel-list__img--big" src="{{ app.request.basepath }}/web/img/hotels/1.jpg" />
                 <div class="hotel-list__description">
                     <h2 class="hotel-list__title">"{{ hotel.name }}"</h2>
-                    <span class="hotel-list__town">{{ townName }}</span>
+                    <span class="hotel-list__town">{{ hotel.town }}</span>
                     <div class="hotel-list__rating">Note : {{ hotel.rating }} étoile(s)</div>
-                    <div class="hotel-list__available-rooms">{{ hotelRooms|length }} chambre(s) disponible(s)</div>
+                    <div class="hotel-list__available-rooms">{{ rooms|length }} chambre(s) disponible(s)</div>
                 </div>
             </div>
             <div class="available-rooms">
-                <h3>{{ hotelRooms|length }} chambre(s) disponible(s) selon vos critères</h3>
-                {% for hotelRoom in hotelRooms %}
+                <h3>{{ rooms|length }} chambre(s) disponible(s) selon vos critères</h3>
+                {% for room in rooms %}
                     <div class="hotel-list">
                         <img class="hotel-list__img" src="{{ app.request.basepath }}/web/img/hotels/1.jpg" />
                         <div class="hotel-list__description">
-                            <h4 class="hotel-list__title">Chambre {{ hotelRoom.capacity }} personne(s)</h4>
-                            {% if hotelRoom.type == 0 %}
+                            <h4 class="hotel-list__title">Chambre {{ room.capacity }} personne(s)</h4>
+                            {% if room.type == 0 %}
                                 {% set type = 'Privative' %}
                             {% else %}
                                 {% set type = 'Dortoir' %}
@@ -27,11 +27,11 @@
                             <div class="room-list__room-type">Type : {{ type }}</div>
                         </div>
                         <div class="hotel-list__right">
-                            <div class="hotel-list__right__price">{{ hotelRoom.price }}€ / nuit</div>
+                            <div class="hotel-list__right__price">{{ room.price }}€ / nuit</div>
                             <form action="{{ path('book') }}" method="post">
-                                <input type="hidden" name="idRoom" value="{{ hotelRoom.id }}" />
-                                <input type="hidden" name="fromDate" value="{{ fromDate }}" />
-                                <input type="hidden" name="toDate" value="{{ toDate }}" />
+                                <input type="hidden" name="idRoom" value="{{ room.id }}" />
+                                <input type="hidden" name="fromDate" value="{{ departure }}" />
+                                <input type="hidden" name="toDate" value="{{ arrival }}" />
                                 <input type="submit" class="horel-list__right__book btn btn--blue" value="Réserver" />
                             </form>
                         </div>

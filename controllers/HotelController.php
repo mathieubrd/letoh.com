@@ -14,41 +14,46 @@ use Symfony\Component\HttpFoundation\Request;
 class HotelController {
 
     public function indexAction(Request $req, Application $app) {
-        $fromDate = $req->attributes->get('fromDate');
-        $toDate = $req->attributes->get('toDate');
-
-        // Récupère de l'hotel
-        $qb = $app['db']->createQueryBuilder();
-        $qb
-            ->select('h.*', 't.name AS townName')
-            ->from('Hotel', 'h')
-            ->join('h', 'Town', 't', 'h.idTown = t.id')
-            ->where('h.id = ?')
-            ->setParameter(0, $req->attributes->get('id'));
-        $hotel = $qb->execute()->fetch();
-
-        $townName = $hotel['townName'];
+        // Récupère les informations de l'hotel
+        $sql = "
+            SELECT h.name, h.rating, t.name AS town
+            FROM Hotel h
+            JOIN Town t ON h.idTown = t.id
+            WHERE h.id = :idHotel";
+        $stmt = $app['db']->prepare($sql);
+        $stmt->bindValue('idHotel', $req->get('idHotel'));
+        $stmt->execute();
+        $hotel = $stmt->fetch();
 
         // Si l'hotel n'existe pas, redirige vers 404
         if (!$hotel) {
             return $app['twig']->render('404.twig');
         }
 
-        // Récupère les chambres disponibles de l'hotel
-        $qb->resetQueryParts();
-        $qb
-            ->select('hr.*')
-            ->from('HotelRoom', 'hr')
-            ->where('hr.idHotel = ?')
-            ->setParameter(0, $req->attributes->get('id'));
-        $hotelRooms = $qb->execute()->fetchAll();
+        // Récupère les chambres
+        $sql = "SELECT h.name, h.rating, hr.capacity, hr.type, hr.price, hr.id
+            FROM Hotel h
+            JOIN HotelRoom hr ON hr.idHotel = h.id
+            WHERE h.id = :idHotel AND
+              (SELECT COUNT(b.id)
+                FROM Booking b
+                WHERE b.idHotelRoom = hr.id AND
+                  b.arrival >= :arrival AND
+                  b.departure <= :departure
+              ) == 0";
+        $stmt = $app['db']->prepare($sql);
+        $stmt->bindValue('idHotel', $req->get('idHotel'));
+        $stmt->bindValue('arrival', $req->get('arrival'));
+        $stmt->bindValue('departure', $req->get('departure'));
+        $stmt->execute();
+
+        $rooms = $stmt->fetchAll();
 
         return $app['twig']->render('hotel.twig', array(
             'hotel' => $hotel,
-            'townName' => ucfirst(strtolower($townName)),
-            'hotelRooms' => $hotelRooms,
-            'fromDate' => $fromDate,
-            'toDate' => $toDate));
+            'rooms' => $rooms,
+            'arrival' => $req->get('arrival'),
+            'departure' => $req->get('departure')));
     }
 
 }

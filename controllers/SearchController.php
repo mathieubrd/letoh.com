@@ -20,60 +20,15 @@ class SearchController {
         $fromDate = date('Y-m-d', $fromDate);
         $toDate = date('Y-m-d', $toDate);
 
-        // Récupération des filtres (si donnés)
-        $minRating = 1;
-        $maxRating = 5;
-        $minPrice = 0;
-        $maxPrice = PHP_INT_MAX;
-
-        if ($req->get('minRating')) {
-            $minRating = $req->get('minRating');
-        } if ($req->get('maxRating')) {
-            $maxRating = $req->get('maxRating');
-        } if ($req->get('minPrice')) {
-            $minPrice = $req->get('minPrice');
-        } if ($req->get('maxPrice')) {
-            $maxPrice = $req->get('maxPrice');
-        }
-
-        $sql = "SELECT h.id, h.name, h.rating, COUNT(hr.idHotel) as hotelRoomCount, MIN(hr.price) as minPrice, MIN(h.rating) as minRating, MAX(h.rating) as maxRating ";
-        $sql .= "FROM Hotel h ";
-        $sql .= "JOIN Town t ON h.idTown = t.id ";
-        $sql .= "JOIN HotelRoom hr ON hr.idHotel = h.id ";
-        $sql .= "WHERE t.name = :townName AND ";
-        $sql .= "h.rating >= :minRating AND ";
-        $sql .= "h.rating <= :maxRating AND ";
-        $sql .= "hr.price >= :minPrice AND ";
-        $sql .= "hr.price <= :maxPrice ";
-        if ($req->get('privative') AND $req->get('dortoir')) {
-            $sql .= "AND (hr.type = 0 OR hr.type = 1)";
-        } else {
-            if ($req->get('privative')) {
-                $sql .= "AND hr.type = 0 ";
-            } if ($req->get('dortoir')) {
-                $sql .= "AND hr.type = 1 ";
-            }
-        }
-        $sql .= "AND ( ";
-        $sql .= "SELECT COUNT(b.id) ";
-        $sql .= "FROM Booking b ";
-        $sql .= "WHERE b.idHotelRoom = hr.id AND ";
-        $sql .= "b.arrival >= :arrival ";
-        $sql .= "AND b.departure <= :departure ";
-        $sql .= ") == 0 ";
-        $sql .= "GROUP BY hr.idHotel";
-
-        $stmt = $app['db']->prepare($sql);
-        $stmt->bindValue("townName", $town);
-        $stmt->bindValue("minRating", $minRating);
-        $stmt->bindValue("maxRating", $maxRating);
-        $stmt->bindValue("minPrice", $minPrice);
-        $stmt->bindValue("maxPrice", $maxPrice);
-        $stmt->bindValue("arrival", $fromDate);
-        $stmt->bindValue("departure", $toDate);
-        $stmt->execute();
-
-        $hotels = $stmt->fetchAll();
+        $hotelProvider = $app['hotel_provider'];
+        $hotels = $hotelProvider->getData(
+            $town,
+            $fromDate,
+            $toDate,
+            $req->get('minRating'),
+            $req->get('maxRating'),
+            $req->get('minPrice'),
+            $req->get('maxPrice'));
 
         if (count($hotels) > 0) {
             // Recherche le prix le plus bas de tous les hôtels
@@ -91,6 +46,12 @@ class SearchController {
             $allMinPrice = 0;
             $allMaxPrice = 0;
         }
+
+        if ($req->get('minPrice') == null) $minPrice = $allMinPrice;
+        else $minPrice = $req->get('minPrice');
+
+        if ($req->get('maxPrice') == null) $maxPrice = $allMaxPrice;
+        else $maxPrice = $req->get('maxPrice');
 
         $opt = array(
             'town' => $town,

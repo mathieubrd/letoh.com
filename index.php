@@ -9,6 +9,7 @@ require_once 'controllers/HotelController.php';
 require_once 'controllers/BookController.php';
 require_once 'controllers/AccountController.php';
 require_once 'UserProvider.php';
+require_once 'services/HotelProvider.php';
 
 $app = new Silex\Application();
 
@@ -58,9 +59,13 @@ $app['security.access_rules'] = array(
     array('^/book', 'ROLE_USER', null)
 );
 
+$app['hotel_provider'] = function($app) {
+   return new HotelProvider($app['db']);
+};
+
 $app->get('/', 'Letoh\Controller\IndexController::indexAction')->bind('home');
 $app->post('/search', 'Letoh\Controller\SearchController::indexAction')->bind('search');
-$app->get('/hotel/{id}/{fromDate}/{toDate}', 'Letoh\Controller\HotelController::indexAction')->bind('hotel');
+$app->post('/hotel', 'Letoh\Controller\HotelController::indexAction')->bind('hotel');
 $app->match('/signup', 'Letoh\Controller\SignupController::indexAction')->bind('signup');
 $app->get('/signup/success', 'Letoh\Controller\SignupController::successAction')->bind('signup_success');
 $app->get('/login', 'Letoh\Controller\LoginController::indexAction')->bind('login');
