@@ -54,7 +54,14 @@ class SearchController {
                 $sql .= "AND hr.type = 1 ";
             }
         }
-        $sql .= "GROUP BY h.id";
+        $sql .= "AND ( ";
+        $sql .= "SELECT COUNT(b.id) ";
+        $sql .= "FROM Booking b ";
+        $sql .= "WHERE b.idHotelRoom = hr.id AND ";
+        $sql .= "b.arrival >= :arrival ";
+        $sql .= "AND b.departure <= :departure ";
+        $sql .= ") == 0 ";
+        $sql .= "GROUP BY hr.idHotel";
 
         $stmt = $app['db']->prepare($sql);
         $stmt->bindValue("townName", $town);
@@ -62,6 +69,8 @@ class SearchController {
         $stmt->bindValue("maxRating", $maxRating);
         $stmt->bindValue("minPrice", $minPrice);
         $stmt->bindValue("maxPrice", $maxPrice);
+        $stmt->bindValue("arrival", $fromDate);
+        $stmt->bindValue("departure", $toDate);
         $stmt->execute();
 
         $hotels = $stmt->fetchAll();
