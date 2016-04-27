@@ -20,16 +20,51 @@ class SearchController {
         $fromDate = date('Y-m-d', $fromDate);
         $toDate = date('Y-m-d', $toDate);
 
-        $hotels = $app['db']->createQueryBuilder()
-            ->select('h.id, h.name, h.rating, COUNT(hr.idHotel) as hotelRoomCount, MIN(hr.price) as minPrice')
-            ->from('Hotel', 'h')
-            ->join('h', 'Town', 't', 'h.idTown = t.id')
-            ->join('h', 'HotelRoom', 'hr', 'hr.idHotel = h.id')
-            ->where('t.name = :townName')
-            ->groupBy('hr.idHotel')
-            ->setParameter(':townName', $town)
-            ->execute()
-            ->fetchAll();
+        // Récupération des filtres (si donnés)
+        $minRating = 1;
+        $maxRating = 5;
+        $minPrice = 0;
+        $maxPrice = PHP_INT_MAX;
+
+        if ($req->get('minRating')) {
+            $minRating = $req->get('minRating');
+        } if ($req->get('maxRating')) {
+            $maxRating = $req->get('maxRating');
+        } if ($req->get('minPrice')) {
+            $minPrice = $req->get('minPrice');
+        } if ($req->get('maxPrice')) {
+            $maxPrice = $req->get('maxPrice');
+        }
+
+        $sql = "SELECT h.id, h.name, h.rating, COUNT(hr.idHotel) as hotelRoomCount, MIN(hr.price) as minPrice, MIN(h.rating) as minRating, MAX(h.rating) as maxRating ";
+        $sql .= "FROM Hotel h ";
+        $sql .= "JOIN Town t ON h.idTown = t.id ";
+        $sql .= "JOIN HotelRoom hr ON hr.idHotel = h.id ";
+        $sql .= "WHERE t.name = :townName AND ";
+        $sql .= "h.rating >= :minRating AND ";
+        $sql .= "h.rating <= :maxRating AND ";
+        $sql .= "hr.price >= :minPrice AND ";
+        $sql .= "hr.price <= :maxPrice ";
+        if ($req->get('privative') AND $req->get('dortoir')) {
+            $sql .= "AND (hr.type = 0 OR hr.type = 1)";
+        } else {
+            if ($req->get('privative')) {
+                $sql .= "AND hr.type = 0 ";
+            } if ($req->get('dortoir')) {
+                $sql .= "AND hr.type = 1 ";
+            }
+        }
+        $sql .= "GROUP BY h.id";
+
+        $stmt = $app['db']->prepare($sql);
+        $stmt->bindValue("townName", $town);
+        $stmt->bindValue("minRating", $minRating);
+        $stmt->bindValue("maxRating", $maxRating);
+        $stmt->bindValue("minPrice", $minPrice);
+        $stmt->bindValue("maxPrice", $maxPrice);
+        $stmt->execute();
+
+        $hotels = $stmt->fetchAll();
 
         if (count($hotels) > 0) {
             // Recherche le prix le plus bas de tous les hôtels
@@ -48,14 +83,26 @@ class SearchController {
             $allMaxPrice = 0;
         }
 
-        return $app['twig']->render('search.twig', array(
+        $opt = array(
             'town' => $town,
             'hotels' => $hotels,
             'allMinPrice' => $allMinPrice,
             'allMaxPrice' => $allMaxPrice,
+            'minPrice' => $minPrice,
+            'maxPrice' => $maxPrice,
             'fromDate' => $fromDate,
             'toDate' => $toDate,
-        ));
+        );
+
+        if ($req->get('privative')) {
+            $opt['privative'] = $req->get('privative');
+        } if ($req->get('dortoir')) {
+            $opt['dortoir'] = $req->get('dortoir');
+        } if (!$req->get('privative') && !$req->get('dortoir')) {
+            $opt['privative'] = 1;
+        }
+
+        return $app['twig']->render('search.twig', $opt);
 	}
 
 }

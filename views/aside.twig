@@ -1,45 +1,65 @@
 <aside class="aside-filters">
     <h3 class="aside-filters__title">Filtres</h3>
-    <div class="filter">
-        <span class="filter__title">Prix de la chambre</span>
-        <div class="filter__price-range">
-            <div class="range">
-                <div class="range__slider"></div>
-                <div class="range__min-value">0€</div>
-                <div class="range__max-value">100€</div>
+    <form method="post" action="{{ path('search') }}">
+        <input type="hidden" name="town" value="{{ town }}" />
+        <input type="hidden" name="from" value="{{ from }}" />
+        <input type="hidden" name="to" value="{{ to }}" />
+        <div class="filter">
+            <span class="filter__title">Prix de la chambre</span>
+            <div class="filter__price-range">
+                <div class="range">
+                    <div class="range__slider"></div>
+                    <div class="range__min-value">0€</div>
+                    <div class="range__max-value">100€</div>
+                </div>
+            </div>
+            <input type="hidden" id="minPrice" name="minPrice" value="{{ minPrice }}" />
+            <input type="hidden" id="maxPrice" name="maxPrice" value="{{ maxPrice }}" />
+        </div>
+        <div class="filter">
+            <span class="filter__title">Note</span>
+            <div class="filter__rating-range">
+                <div class="range">
+                    <div class="range__slider"></div>
+                    <div class="range__min-value">0 étoile</div>
+                    <div class="range__max-value">5 étoiles</div>
+                </div>
+                <input type="hidden" id="minRating" name="minRating" value="1" />
+                <input type="hidden" id="maxRating" name="maxRating" value="5" />
             </div>
         </div>
-    </div>
-    <div class="filter">
-        <span class="filter__title">Note</span>
-        <div class="filter__rating-range">
-            <div class="range">
-                <div class="range__slider"></div>
-                <div class="range__min-value">0 étoile</div>
-                <div class="range__max-value">5 étoiles</div>
-            </div>
-        </div>
-    </div>
-    <div class="filter filter--last">
-        <span class="filter__title">Type de chambre</span>
-        <input type="radio" name="roomType" value="1" checked /> privative
-        <input type="radio" name="roomType" value="2" /> dortoir
-    </div>
+        <div class="filter filter--last">
+            <span class="filter__title">Type de chambre</span>
+            {% if privative is defined %}
+                <input type="checkbox" name="privative" checked /> privative
+            {% else %}
+                <input type="checkbox" name="privative" /> privative
+            {% endif %}
 
-    <div class="filter__btn">
-        <input type="submit" class="btn" value="Trier" />
-    </div>
+            {% if dortoir is defined %}
+                <input type="checkbox" name="dortoir" checked /> dortoir
+            {% else %}
+                <input type="checkbox" name="dortoir" /> dortoir
+            {% endif %}
+        </div>
+
+        <div class="filter__btn">
+            <input type="submit" class="btn" value="Trier" />
+        </div>
+    </form>
 </aside>
 
 <script>
     $('.filter__price-range .range__slider').slider({
         range: true,
-        min: {{ minPrice }},
-        max: {{ maxPrice }},
+        min: {{ allMinPrice }},
+        max: {{ allMaxPrice }},
         values: [{{ minPrice }}, {{ maxPrice }}],
         slide: function(event, ui) {
             $('.filter__price-range .range__min-value').text(ui.values[0] + '€');
             $('.filter__price-range .range__max-value').text(ui.values[1] + '€');
+            $('#minPrice').val(ui.values[0]);
+            $('#maxPrice').val(ui.values[1]);
         },
     });
     $('.filter__price-range .range__min-value').text($('.filter__price-range .range__slider').slider('values', 0) + '€');
@@ -47,12 +67,14 @@
 
     $('.filter__rating-range .range__slider').slider({
         range: true,
-        min: 0,
+        min: 1,
         max: 5,
-        values: [0, 5],
+        values: [1, 5],
         slide: function(event, ui) {
             $('.filter__rating-range .range__min-value').text(ui.values[0] + ' étoile(s)');
             $('.filter__rating-range .range__max-value').text(ui.values[1] + ' étoile(s)');
+            $('#minRating').val(ui.values[0]);
+            $('#maxRating').val(ui.values[1]);
         }
     });
     $('.filter__rating-range .range__min-value').text($('.filter__rating-range .range__slider').slider('values', 0) + ' étoile(s)');

@@ -2,8 +2,13 @@
 
 {% block aside %}
     {% include 'aside.twig' with {
-        'minPrice': allMinPrice,
-        'maxPrice': allMaxPrice
+        'allMinPrice': allMinPrice,
+        'allMaxPrice': allMaxPrice,
+        'minPrice': minPrice,
+        'maxPrice': maxPrice,
+        'from': fromDate,
+        'to': toDate,
+        'town': town,
     } %}
 {% endblock %}
 

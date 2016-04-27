@@ -19,7 +19,7 @@
                         <img class="hotel-list__img" src="{{ app.request.basepath }}/web/img/hotels/1.jpg" />
                         <div class="hotel-list__description">
                             <h4 class="hotel-list__title">Chambre {{ hotelRoom.capacity }} personne(s)</h4>
-                            {% if hotelRoom.type == 1 %}
+                            {% if hotelRoom.type == 0 %}
                                 {% set type = 'Privative' %}
                             {% else %}
                                 {% set type = 'Dortoir' %}
