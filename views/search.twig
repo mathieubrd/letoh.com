@@ -14,7 +14,7 @@
 
 {% block content %}
     <section class="section section--float-right">
-        <h3>{{ hotels|length }} hôtel(s) à {{ town }} selon vos critères</h3>
+        <h3>{{ hotels|length }} hôtel(s) à {{ town|capitalize }} selon vos critères</h3>
 
         {% for hotel in hotels %}
             <form method="post" action="{{ path('hotel') }}">
