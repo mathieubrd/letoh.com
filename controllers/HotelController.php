@@ -16,7 +16,7 @@ class HotelController {
     public function indexAction(Request $req, Application $app) {
         // Récupère les informations de l'hotel
         $sql = "
-            SELECT h.name, h.rating, t.name AS town
+            SELECT h.name, h.rating, h.address, t.name AS town
             FROM Hotel h
             JOIN Town t ON h.idTown = t.id
             WHERE h.id = :idHotel";
@@ -31,7 +31,7 @@ class HotelController {
         }
 
         // Récupère les chambres
-        $sql = "SELECT h.name, h.rating, hr.capacity, hr.type, hr.price, hr.id
+        $sql = "SELECT h.rating, hr.capacity, hr.type, hr.price, hr.id
             FROM Hotel h
             JOIN HotelRoom hr ON hr.idHotel = h.id
             WHERE h.id = :idHotel AND

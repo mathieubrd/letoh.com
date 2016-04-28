@@ -7,7 +7,7 @@
                 <img class="hotel-list__img hotel-list__img--big" src="{{ app.request.basepath }}/web/img/hotels/1.jpg" />
                 <div class="hotel-list__description">
                     <h2 class="hotel-list__title">"{{ hotel.name }}"</h2>
-                    <span class="hotel-list__town">{{ hotel.town }}</span>
+                    <span class="hotel-list__address">{{ hotel.address }} - {{ hotel.town|capitalize }}</span>
                     <div class="hotel-list__rating">Note : {{ hotel.rating }} étoile(s)</div>
                     <div class="hotel-list__available-rooms">{{ rooms|length }} chambre(s) disponible(s)</div>
                 </div>
