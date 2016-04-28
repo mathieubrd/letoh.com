@@ -19,8 +19,8 @@
         {% for hotel in hotels %}
             <form method="post" action="{{ path('hotel') }}">
                 <input type="hidden" name="idHotel" value="{{ hotel.id }}" />
-                <input type="hidden" name="departure" value="{{ fromDate }}" />
-                <input type="hidden" name="arrival" value="{{ toDate }}" />
+                <input type="hidden" name="arrival" value="{{ fromDate }}" />
+                <input type="hidden" name="departure" value="{{ toDate }}" />
 
                 <div class="hotel-list">
                     <img class="hotel-list__img" src="{{ app.request.basepath }}/web/img/hotels/1.jpg" />
@@ -31,9 +31,7 @@
                     </div>
                     <div class="hotel-list__right">
                         <div class="hotel-list__right__price">{{ hotels[loop.index0].minPrice }}€ / nuit</div>
-                        <a href="{{ path('hotel', { 'id': hotel.id, 'fromDate': fromDate, 'toDate': toDate } )}}">
-                            <button class="horel-list__right__book btn btn--blue">Réserver</button>
-                        </a>
+                        <input type="submit" class="horel-list__right__book btn btn--blue" value="Réserver" />
                     </div>
                 </div>
             </form>
