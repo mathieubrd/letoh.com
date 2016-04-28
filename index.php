@@ -8,7 +8,7 @@ require_once 'controllers/LoginController.php';
 require_once 'controllers/HotelController.php';
 require_once 'controllers/BookController.php';
 require_once 'controllers/AccountController.php';
-require_once 'UserProvider.php';
+require_once 'services/UserProvider.php';
 require_once 'services/HotelProvider.php';
 
 $app = new Silex\Application();
