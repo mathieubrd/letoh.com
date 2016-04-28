@@ -30,16 +30,16 @@
         </div>
         <div class="filter filter--last">
             <span class="filter__title">Type de chambre</span>
-            {% if privative is defined %}
-                <input type="checkbox" name="privative" checked /> privative
+            {% if roomType == 0 %}
+                <input type="radio" name="roomType" value="0" checked /> privative
             {% else %}
-                <input type="checkbox" name="privative" /> privative
+                <input type="radio" name="roomType" value="0" /> privative
             {% endif %}
 
-            {% if dortoir is defined %}
-                <input type="checkbox" name="dortoir" checked /> dortoir
+            {% if roomType == 1 %}
+                <input type="radio" name="roomType" value="1" checked /> dortoir
             {% else %}
-                <input type="checkbox" name="dortoir" /> dortoir
+                <input type="radio" name="roomType" value="1" /> dortoir
             {% endif %}
         </div>
 

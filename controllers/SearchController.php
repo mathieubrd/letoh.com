@@ -28,7 +28,8 @@ class SearchController {
             $req->get('minRating'),
             $req->get('maxRating'),
             $req->get('minPrice'),
-            $req->get('maxPrice'));
+            $req->get('maxPrice'),
+            $req->get('roomType'));
 
         if (count($hotels) > 0) {
             // Recherche le prix le plus bas de tous les hôtels
@@ -53,7 +54,10 @@ class SearchController {
         if ($req->get('maxPrice') == null) $maxPrice = $allMaxPrice;
         else $maxPrice = $req->get('maxPrice');
 
-        $opt = array(
+        if (!$req->get('roomType')) $roomType = 0;
+        else $roomType = $req->get('roomType');
+
+        return $app['twig']->render('search.twig', array(
             'town' => $town,
             'hotels' => $hotels,
             'allMinPrice' => $allMinPrice,
@@ -62,17 +66,8 @@ class SearchController {
             'maxPrice' => $maxPrice,
             'fromDate' => $fromDate,
             'toDate' => $toDate,
-        );
-
-        if ($req->get('privative')) {
-            $opt['privative'] = $req->get('privative');
-        } if ($req->get('dortoir')) {
-            $opt['dortoir'] = $req->get('dortoir');
-        } if (!$req->get('privative') && !$req->get('dortoir')) {
-            $opt['privative'] = 1;
-        }
-
-        return $app['twig']->render('search.twig', $opt);
+            'roomType' => $roomType,
+        ));
 	}
 
 }

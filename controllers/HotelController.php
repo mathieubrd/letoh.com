@@ -35,6 +35,7 @@ class HotelController {
             FROM Hotel h
             JOIN HotelRoom hr ON hr.idHotel = h.id
             WHERE h.id = :idHotel AND
+              hr.type = :roomType AND
               (SELECT COUNT(b.id)
                 FROM Booking b
                 WHERE b.idHotelRoom = hr.id AND
@@ -43,6 +44,7 @@ class HotelController {
               ) == 0";
         $stmt = $app['db']->prepare($sql);
         $stmt->bindValue('idHotel', $req->get('idHotel'));
+        $stmt->bindValue('roomType', $req->get('roomType'));
         $stmt->bindValue('arrival', $req->get('arrival'));
         $stmt->bindValue('departure', $req->get('departure'));
         $stmt->execute();
